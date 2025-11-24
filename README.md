@@ -1,45 +1,73 @@
-# **GlitchBlade 🎹**
+# React + TypeScript + Vite
 
-**A cyberpunk-inspired browser-based audio sampler, auto-chopper, and generative sequencer.**  
-GlitchBlade allows creators to load audio or video files, automatically slice them based on algorithmic transient detection, and perform them live via Keyboard or MIDI. It features a unique **Chaos Mode** for generative sound design.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## **✨ Key Features**
+Currently, two official plugins are available:
 
-* **Universal Import**: Drag & drop .wav, .mp3, or .mp4 video files (audio is extracted automatically).  
-* **Auto-Cue Slicing**: Smart transient detection algorithm chops samples instantly.  
-* **Visual Interface**: Real-time canvas rendering of waveforms and slice regions.  
-* **Performance Ready**:  
-  * **Keyboard**: Map ASDF / WERY rows to slices.  
-  * **MIDI Support**: Plug & Play with any MIDI controller (maps chromatically from C2).  
-* **Chaos Mode**: A generative sequencer that triggers random slices at variable tempos to create unique textures.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## **🚀 Quick Start**
+## React Compiler
 
-1. **Clone the repository**  
-   git clone \[https://github.com/frangedev/glitch-blade.git\](https://github.com/frangedev/glitch-blade.git)
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-2. **Install dependencies**  
-   cd glitch-blade  
-   npm install
+## Expanding the ESLint configuration
 
-3. **Run the app**  
-   npm run dev
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-## **🎮 Controls**
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-| Action | Control |
-| :---- | :---- |
-| **Load File** | Click the upload box or drag & drop a file. |
-| **Trigger Slice** | Click Pads / Keys A, W, S, E, D... / MIDI Keys. |
-| **Adjust Sensitivity** | Use the "Threshold" slider to detect more/fewer cuts. |
-| **Chaos Mode** | Click "Start Chaos Seq" for random looping. |
-| **Tempo** | Adjust BPM slider to change the Chaos sequence speed. |
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-## **🛠 Technology Stack**
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
-* **Frontend**: React 18, TypeScript  
-* **Audio Engine**: Native Web Audio API (AudioBuffer, AnalyserNode)  
-* **Styling**: Tailwind CSS  
-* **Icons**: Lucide React
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-*Created by Mehmet T. AKALIN. Licensed under MIT.*
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
