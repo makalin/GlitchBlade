@@ -1,7 +1,7 @@
 # GLITCHBLADE
 
 <div align="center">
-  <img src="assets/logo.png" alt="GlitchBlade Logo" width="200">
+  <img src="assets/logo.png" alt="GlitchBlade Logo" width="500">
 </div>
 
 A web-based audio sampler and glitch instrument built with React, TypeScript, and the Web Audio API. Transform any audio file into a playable 12-pad sampler with real-time effects and automatic transient detection.
